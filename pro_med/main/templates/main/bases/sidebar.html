@@ -1,7 +1,13 @@
 
 <div class="sidebar">
-    <a href="#">About</a>
+    <a href="{% url "add_pacient_page" %}">Регистрация пациентов</a>
     <a href="#">Services</a>
     <a href="#">Clients</a>
     <a href="#">Contact</a>
+    <div class="logout_place">
+        <form action="{% url "logout" %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-secondary">Выход</button>
+        </form>
+    </div>
 </div>

@@ -1,0 +1,31 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}Вход{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/auth/css/login_page.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="auth-place">
+    <!-- {{login_form.as_div}} -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="id_username" name="username" placeholder="{{login_form.username.label}}">
+            <label for="id_username">{{login_form.username.label}}</label>    
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="id_password" name="password" placeholder="{{login_form.password.label}}">
+            <label for="id_password">{{login_form.password.label}}</label>
+        </div> 
+        <button type="submit" class="btn btn-outline-secondary login-btn">Вход</button>    
+        {% if error %}
+        <span class="error-text">
+            {{error}}
+        </span>
+        {% endif %}
+    </form>
+    
+</div>
+{% endblock content %}

@@ -32,6 +32,10 @@ class Pacients(models.Model):
     phone_number = models.CharField('Телефон', max_length=15)
     email = models.CharField('Почта', max_length=100)
 
+    insurance_number = models.IntegerField('Cтраховой полис', null=True)
+    insurance_end_date = models.DateField('Срок действия', null=True)
+    insurance_company = models.CharField('Страховая компания', max_length=150, null=True)
+
     medical_record_number = models.CharField('Номер медицинской карты', max_length=100)
     date_created_medical_record = models.DateField('Дата выдачи медицинской карты пациента') 
 

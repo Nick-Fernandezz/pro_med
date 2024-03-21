@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "main/bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "main/bases/css/base.css" %}">
-    <link rel="stylesheet" href="{% static "main/bases/css/sidebar.css" %}">
+    
+    {% if user.is_authenticated %}
+        <link rel="stylesheet" href="{% static "main/bases/css/sidebar.css" %}">
+    {% endif %}
     {% block head %}{% endblock head %}
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    {% include "main/bases/sidebar.html" %}
+    {% if user.is_authenticated %}
+        {% include "main/bases/sidebar.html" %}
+    {% endif %}
+    {% comment %} {% include "main/bases/sidebar.html" %} {% endcomment %}
     <div class="main">
         {% block content %}{% endblock content %}
     </div>

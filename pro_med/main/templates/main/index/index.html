@@ -1,7 +1,31 @@
 {% extends "main/bases/base.html" %}
+{% load static %}
+
 
 {% block title %}Pro Medic{% endblock title %}
 
-{% block head %}{% endblock head %}
+{% block head %}
 
-{% block content %}123{% endblock content %}
+{% endblock head %}
+
+{% block content %}
+
+
+<div class="auth-place">
+    {% if user.is_authenticated %}
+        {% if user.avater %}
+            <img src="{{user.avatar.url}}">
+        {% else %}
+        <img src="{% static "main/bases/img/default_avatar.webp" %}">
+        {% endif %}
+        {{user.last_name}} {{user.first_name|slice:"1"}}. {{user.middle_name|slice:"1"}}.
+    {% else %}
+        <div class="auth-links">
+            <a href="">
+                Вход
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

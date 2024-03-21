@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from main import urls as main_urls
+from pacients import urls as pacients_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(main_urls))
+    path('', include(main_urls)),
+    path('pacients/', include(pacients_urls))
 ]

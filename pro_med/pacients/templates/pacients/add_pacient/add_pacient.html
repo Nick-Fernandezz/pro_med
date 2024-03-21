@@ -1,0 +1,84 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}Регистрация пациента{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/add_pacient/add_pacient.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<div class="form-place">
+    <h2>Регистрация пациента</h2>
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Фамилия" name="last_name" required>
+            <input type="text" placeholder="Имя" class="form-control" name="first_name" required>
+            <input type="text" placeholder="Отчество" class="form-control" name="middle_name">
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">Фото</label>
+            <input type="file" class="form-control" id="inputGroupFile01" name="avatar">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Серия и номер паспорта</span>
+            <input type="text" aria-label="series_passport" class="form-control" name="series_passport" required>
+            <input type="text" aria-label="numner_passport" class="form-control" name="numner_passport" required>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Дата рождения</span>
+            <input type="date" class="form-control" id="date" name="birthday" placeholder="Дата рождения" required>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Пол</span>
+            <select class="form-select" id="autoSizingSelect" name="sex" required>
+                <option selected>Выбрать</option>
+                <option value="Male">Мужской</option>
+                <option value="Female">Женский</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Место работы</span>
+            <input type="text" aria-label="work_place" class="form-control" name="work_place" >
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Страна</span>
+            <select class="form-select" id="autoSizingSelect" name="country" required>
+                <option value="Россия" selected>Россия</option>
+            </select>
+            <span class="input-group-text">Субъект</span>
+            <input type="text" class="form-control" name="state" required>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Город</span>
+            <input type="text" class="form-control" name="city" required>
+            <span class="input-group-text">Улица</span>
+            <input type="text" class="form-control" name="street">
+            <span class="input-group-text">Дом</span>
+            <input type="text" class="form-control" name="house" required>
+            <span class="input-group-text">Подъезд</span>
+            <input type="text" class="form-control" name="entrance">
+            <span class="input-group-text">Квартира</span>
+            <input type="text" class="form-control" name="apartment">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Телефон</span>
+            <input type="tel" class="form-control" name="phone_number" value="+7" required>
+            <span class="input-group-text">Почта</span>
+            <input type="text" class="form-control" name="email">
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Cтраховой полис №</span>
+            <input type="text" class="form-control" name="insurance_number" required>
+            <span class="input-group-text">Срок действия</span>
+            <input type="date" class="form-control" id="date" name="insurance_end_date" required>
+            <span class="input-group-text">Страховая компания</span>
+            <input type="text" class="form-control" name="insurance_company" required>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary w-100">Зарегистрировать</button>
+        {% if error %}<span style="color: red">{{error}}</span>{% endif %}
+    </form>
+</div>
+
+{% endblock content %}
