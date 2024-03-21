@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "main/bootstrap/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "main/bases/css/base.css" %}">
+    <link rel="stylesheet" href="{% static "main/bases/css/sidebar.css" %}">
+    {% block head %}{% endblock head %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    {% include "main/bases/sidebar.html" %}
+    <div class="main">
+        {% block content %}{% endblock content %}
+    </div>
+    <script src="{% static "main/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>
