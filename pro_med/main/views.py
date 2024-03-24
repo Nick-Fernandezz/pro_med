@@ -26,6 +26,7 @@ def login_page(request):
             login(request, user)
             return redirect('index_page')
 
+
 def logout_user(requets):
     if requets.method == "POST":
         logout(requets)

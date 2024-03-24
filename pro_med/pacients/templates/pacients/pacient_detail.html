@@ -1,0 +1,49 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}{{pacient.last_name}} {{pacient.first_nm}}{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/pacient_detail.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<div class="pacient-info-place">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="avatar-place texxt-center">
+                {% if pacient.avatar %}
+                    <img src="{{pacient.avatar.url}}" alt="">
+                {% else %}
+                    <img src="{% static "main/auth/img/default_avatar.webp" %}" alt="">
+                {% endif %}
+                
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="name-place">
+                <h2>{{pacient.last_name}} {{pacient.first_name}} {{pacient.middle_name}}</h2>
+                <h5>{{pacient.birthday}}</h3>
+                <p>Номер медицинской карты: {{pacient.medical_record_number}} ({{pacient.date_created_medical_record}})</p>
+                <p>{{pacient.phone_number}} {% if pacient.email %} {{pacient.email}} {% endif %}</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="qr-place">
+        {% for line in qr_matrix %}
+        <div class="qr-line">
+            {% for point in line %}
+            {% if point %}
+            <span class="qr-point-t"></span>
+            {% else %}
+            <span class="qr-point-f"></span>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
+
+{% endblock content %}

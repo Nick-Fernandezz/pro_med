@@ -1,0 +1,24 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}Поиск пациента{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/search/pacients.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="search-by-password-place">
+    <form action="" method="post">
+    
+        <h3>Поиск по паспорту</h3>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Серия паспорта</span>
+            <input type="text" class="form-control" name="series_passport">
+            <span class="input-group-text">Номер паспорта</span>
+            <input type="text" class="form-control" name="numner_passport">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Найти</button>
+        </div>
+    </form>  
+</div>
+
+{% endblock content %}

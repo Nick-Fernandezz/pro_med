@@ -1,9 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from .models import *
+from django.conf import settings
 
+import qrcode
+from qrcode.image.svg import SvgPathImage
 # Create your views here.
+
+
+@login_required
+def search_pacient(request):
+    return render(request, 'pacients/search/pacients.html')
+
 
 @login_required
 def add_pacients(request):
@@ -46,3 +55,24 @@ def add_pacients(request):
     else:
 
         return render(request, 'pacients/add_pacient/add_pacient.html')
+
+
+@login_required
+def pacient_detail_page(request, pacient_id):
+    pacient = get_object_or_404(Pacients, id=pacient_id)
+    if not pacient.medical_record_number:
+        pacient.medical_record_number = f'{pacient.last_name[0].upper()}{pacient.id}'
+        pacient.save()
+        print(list(pacient))
+    
+    
+    qr = qrcode.QRCode(image_factory=SvgPathImage)
+    qr.add_data(f'http://{settings.ALLOWED_HOSTS[0]}/pacients/view/{pacient.id}/')
+    qr.make(fit=True)
+    
+    print(len(qr.get_matrix()[0]), len(qr.get_matrix()))
+
+    return render(request, 'pacients/pacient_detail.html', context={
+        'pacient': pacient,
+        'qr_matrix': qr.get_matrix()
+    })

@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+.avatar-place {
+    width: 100%;
+    height: 200px;
+    overflow-x: hidden;
+}
+
+.avatar-place img {
+    height: 100%;
+}
+
+.qr-place {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 145px;
+    width: 145px;
+
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+
+.qr-line {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.qr-point-t, .qr-point-f {
+    display: block;
+    width: 5px;
+    height: 5px;
+}
+
+.qr-point-t {
+    background-color: black;
+}
+
+.qr-point-f {
+    background-color: #fff;
+}
