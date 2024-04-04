@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from .models import *
 from django.conf import settings
+from django.contrib import messages
 
 import qrcode
 from qrcode.image.svg import SvgPathImage
@@ -11,6 +12,27 @@ from qrcode.image.svg import SvgPathImage
 
 @login_required
 def search_pacient(request):
+    if request.GET:
+        if request.GET.get('search_type') == 'passport':
+            try:
+                pacient = Pacients.objects.get(series_passport=request.GET.get('series_passport', None), numner_passport=request.GET.get('numner_passport', None))
+                return redirect('pacient_detail_page', pacient.id)
+            except Pacients.DoesNotExist:
+                messages.add_message(request, messages.ERROR, 'Пациент не найден')
+                return redirect('search_pacient_page')
+            except ValueError:
+                messages.add_message(request, messages.ERROR, 'Введены некорректные данные')
+                return redirect('search_pacient_page')
+        elif request.GET.get('search_type') == 'insurance_number':
+            try:
+                pacient = Pacients.objects.get(insurance_number=request.GET.get('insurance_number', None))
+                return redirect('pacient_detail_page', pacient.id)
+            except Pacients.DoesNotExist:
+                messages.add_message(request, messages.ERROR, 'Пациент не найден')
+                return redirect('search_pacient_page')
+            except ValueError:
+                messages.add_message(request, messages.ERROR, 'Введены некорректные данные')
+                return redirect('search_pacient_page')
     return render(request, 'pacients/search/pacients.html')
 
 
@@ -63,7 +85,6 @@ def pacient_detail_page(request, pacient_id):
     if not pacient.medical_record_number:
         pacient.medical_record_number = f'{pacient.last_name[0].upper()}{pacient.id}'
         pacient.save()
-        print(list(pacient))
     
     
     qr = qrcode.QRCode(image_factory=SvgPathImage)

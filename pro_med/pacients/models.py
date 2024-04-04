@@ -18,6 +18,9 @@ class Pacients(models.Model):
 
     series_passport = models.IntegerField('Серия паспорта')
     numner_passport = models.IntegerField('Номер паспорта')
+    issued_passport = models.CharField('Выдан', max_length=200, null=True)
+    issued_date_passport = models.DateField('Дата выдачи', null=True)
+    issued_code_passport = models.CharField('Код подразделения', max_length=7, default='000-000')
 
     sex = models.CharField('Пол', choices=(( 'Male', 'Мужской'), ('Female', 'Женский')), max_length=10)
 
