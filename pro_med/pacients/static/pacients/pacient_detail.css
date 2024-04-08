@@ -128,3 +128,33 @@
     font-weight: bold;
     font-size: 20px;
 }
+
+
+.therapeutic-and-diagnostic-events {
+    margin-top: 30px;
+}
+
+.functions-place {
+    display: flex;
+    flex-direction: column;
+}
+
+.func-btn-place {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    background-color: #87CEEB;
+    border: 1px #000 solid;
+    padding: 5px;
+}
+
+.func-btn-place a {
+    height: 100%;
+    width: 100%;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}

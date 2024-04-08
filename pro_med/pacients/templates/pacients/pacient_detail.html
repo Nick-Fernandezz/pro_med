@@ -1,6 +1,6 @@
 {% extends "main/bases/base.html" %}
 {% load static %}
-{% block title %}{{pacient.last_name}} {{pacient.first_nm}}{% endblock title %}
+{% block title %}{{pacient.last_name}} {{pacient.first_name|slice:"1"}}. {{pacient.middle_name|slice:"1"}}.{% endblock title %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'pacients/pacient_detail.css' %}">
@@ -15,12 +15,12 @@
                 {% if pacient.avatar %}
                     <img src="{{pacient.avatar.url}}" alt="">
                 {% else %}
-                    <img src="{% static "main/auth/img/default_avatar.webp" %}" alt="">
+                    <img src="{% static 'main/auth/img/default_avatar.webp' %}" alt="">
                 {% endif %}
                 
             </div>
             <div class="download-docs-place">
-                <h6>Согласие на обработку ПД</h4>
+                <h6 style="{% if not pacient.personal_data_doc  %}color: red; {% endif %}">Согласие на обработку ПД</h4>
                 <div class="peronal-data-doc-place">
                     {% if not pacient.personal_data_doc  %}
                         <div class="peronal-data-doc">
@@ -35,7 +35,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <h6>Договор на оказание медицинских услуг</h4>
+                <h6 style="{% if not pacient.contract_doc  %}color: red; {% endif %}">Договор на оказание медицинских услуг</h4>
                 <div class="peronal-data-doc-place">
                         {% if not pacient.contract_doc  %}
                             <div class="peronal-data-doc">
@@ -51,6 +51,14 @@
                         {% endif %}
                 </div>
             </div>
+            <hr>
+            <div class="functions-place">
+                <div class="func-btn-place">
+                    <a href="{% url 'create_td_event' pacient.id %}" class="func-link">
+                        Создать запись на прием
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-8">
             <div class="name-place">
@@ -59,6 +67,31 @@
                 <p>Номер медицинской карты: {{pacient.medical_record_number}} ({{pacient.date_created_medical_record}})</p>
                 <p>{{pacient.phone_number}} {% if pacient.email %} {{pacient.email}} {% endif %}</p>
 
+            </div>
+            <div class="therapeutic-and-diagnostic-events">
+                <h5>Лечебно-диагностические  мероприятия</h5>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Врач</th>
+                        <th scope="col">Тип мероприятия</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Диагноз</th>
+                        <th scope="col">Дата</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in td_events%}
+                            <tr>
+                                <th scope="row">{{event.doctor__last_name}}</th>
+                                <td>{{event.type}}</td>
+                                <td>{{event.event_name}}</td>
+                                <td>{{event.diagnos}}</td>
+                                <td>{{event.started_date}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
             </div>
         </div>
     </div>

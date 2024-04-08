@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from .models import *
+from doctors.models import Doctors
 from django.conf import settings
 from django.contrib import messages
 import os
@@ -100,6 +101,7 @@ def pacient_detail_page(request, pacient_id):
         pacient.medical_record_number = f'{pacient.last_name[0].upper()}{pacient.id}'
         pacient.save()
     
+    td_events = TherapeuticAndDiagnosticEvents.objects.filter(pacient=pacient)
     
     qr = qrcode.QRCode(image_factory=SvgPathImage)
     qr.add_data(f'http://{settings.ALLOWED_HOSTS[0]}/pacients/view/{pacient.id}/')
@@ -109,6 +111,7 @@ def pacient_detail_page(request, pacient_id):
 
     return render(request, 'pacients/pacient_detail.html', context={
         'pacient': pacient,
+        'td_events': td_events,
         'qr_matrix': qr.get_matrix(),
         'personal_doc_url': generate_personal_data_doc(generate_doc_context('personal_data', pacient)),
         'contract_doc_url': generate_contract_doc(generate_doc_context('contract', pacient, request))
@@ -131,3 +134,13 @@ def upload_contract_doc(request, pacient_id):
         pacient.contract_doc = request.FILES['contract-doc']
         pacient.save()
         return redirect('pacient_detail_page', pacient.id)
+
+@login_required
+def create_td_event(request, pacient_id):
+    if request.method == "GET":
+        pacient = get_object_or_404(Pacients, id=pacient_id)
+        doctors = Doctors.objects.filter(is_active=True)
+        return render(request, 'pacients/td_events/create_event.html', context={
+            'pacient': pacient,
+            'doctors': doctors
+        })

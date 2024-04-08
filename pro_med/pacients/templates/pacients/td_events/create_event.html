@@ -1,0 +1,21 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}{{pacient.last_name}} {{pacient.first_name|slice:"1"}}. {{pacient.middle_name|slice:"1"}}.{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/pacient_detail.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for=""></label>
+        
+        <select name="" id="">
+            {% for doctor in doctors %}
+            <option value="{{doctor.id}}">{{ doctor.last_name}} {{doctor.first_name}} {% if doctor.middle_name %} {{doctor.middle_name}} {% endif %}</option>
+            {% endfor %}
+        </select>
+    
+    </form>
+{% endblock content %}
