@@ -3,3 +3,4 @@ pillow==10.2.0
 gunicorn==21.2.0
 mysqlclient==2.2.4
 qrcode==7.4.2
+docxtpl

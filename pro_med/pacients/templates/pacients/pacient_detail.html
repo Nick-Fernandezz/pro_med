@@ -11,13 +11,45 @@
 <div class="pacient-info-place">
     <div class="row justify-content-center">
         <div class="col-4">
-            <div class="avatar-place texxt-center">
+            <div class="avatar-place text-center">
                 {% if pacient.avatar %}
                     <img src="{{pacient.avatar.url}}" alt="">
                 {% else %}
                     <img src="{% static "main/auth/img/default_avatar.webp" %}" alt="">
                 {% endif %}
                 
+            </div>
+            <div class="download-docs-place">
+                <h6>Согласие на обработку ПД</h4>
+                <div class="peronal-data-doc-place">
+                    {% if not pacient.personal_data_doc  %}
+                        <div class="peronal-data-doc">
+                            <a href="{{personal_doc_url}}" download>Скачать</a>
+                        </div>
+                        <div class="peronal-data-doc">
+                            <button onclick="document.querySelector('.upload-personal-data-doc').classList.remove('deactive-div')">Загрузить</button>
+                        </div>
+                    {% else %}
+                        <div class="peronal-data-doc">
+                            <a href="{{pacient.personal_data_doc.url}}">Смотреть</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <h6>Договор на оказание медицинских услуг</h4>
+                <div class="peronal-data-doc-place">
+                        {% if not pacient.contract_doc  %}
+                            <div class="peronal-data-doc">
+                                <a href="{{contract_doc_url}}" download>Скачать</a>
+                            </div>
+                            <div class="peronal-data-doc">
+                                <button onclick="document.querySelector('.upload-contract-doc').classList.remove('deactive-div')">Загрузить</button>
+                            </div>
+                        {% else %}
+                            <div class="peronal-data-doc">
+                                <a href="{{pacient.contract_doc.url}}">Смотреть</a>
+                            </div>
+                        {% endif %}
+                </div>
             </div>
         </div>
         <div class="col-8">
@@ -43,6 +75,22 @@
         </div>
         {% endfor %}
         
+    </div>
+    <div class="upload-personal-data-doc  deactive-div">
+        <button class="close-btn" onclick="document.querySelector('.upload-personal-data-doc').classList.add('deactive-div')">×</button>
+        <form action="{% url 'upload_personal_data_doc' pacient.id %}" method="post" enctype="multipart/form-data" id="upload-personal-data-form">
+            {% csrf_token %}
+            <label for="personal-data-doc"><b>Загрузить ПД</b></label>
+            <input type="file" name="personal-data-doc" id="personal-data-doc" onchange="document.querySelector('#upload-personal-data-form').submit()">
+        </form>
+    </div>
+    <div class="upload-contract-doc  deactive-div">
+        <button class="close-btn" onclick="document.querySelector('.upload-contract-doc').classList.add('deactive-div')">×</button>
+        <form action="{% url 'upload_contract_doc' pacient.id %}" method="post" enctype="multipart/form-data" id="upload-contract-form">
+            {% csrf_token %}
+            <label for="personal-data-doc"><b>Загрузить договор</b></label>
+            <input type="file" name="contract-doc" id="personal-data-doc" onchange="document.querySelector('#upload-contract-form').submit()">
+        </form>
     </div>
 </div>
 

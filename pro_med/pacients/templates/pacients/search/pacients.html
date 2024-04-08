@@ -43,4 +43,21 @@
         {% endif %}
     </form>  
 </div>
+<div class="search-by-password-place">
+    <form action="" method="get">
+        {% csrf_token %}
+        <input type="hidden" name="search_type" value="medical_record_number">
+        <h3>Поиск по номеру медицинской карты</h3>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Номер</span>
+            <input type="text" class="form-control" name="medical_record_number">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Найти</button>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <span>{{message}}</span>
+            {% endfor %}
+        {% endif %}
+    </form>  
+</div>
 {% endblock content %}

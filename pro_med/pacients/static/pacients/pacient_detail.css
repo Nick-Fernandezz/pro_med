@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+.deactive-div {
+    display: none !important; 
+}
+
 .avatar-place {
     width: 100%;
     height: 200px;
@@ -40,4 +44,87 @@
 
 .qr-point-f {
     background-color: #fff;
+}
+
+.download-docs-place {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.download-docs-place .peronal-data-doc {
+
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #87CEEB;
+    padding: 5px;
+    border: 1px #000 solid;
+    margin-bottom: 5px;
+    
+}
+
+.download-docs-place div > a {
+
+    height: 100%;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+    user-select: none;
+    color: black;
+    
+}
+
+.download-docs-place .peronal-data-doc-place {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.peronal-data-doc {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+}
+
+.peronal-data-doc button {
+    background: 0;
+    border: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    height: 100%;
+}
+
+
+.upload-personal-data-doc, .upload-contract-doc {
+    padding: 8px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 99;
+    background-color: #87CEEB;
+    border-radius: 20px;
+    width: 400px;
+    height: 70px;
+    right: calc((100vw / 2) - (400px / 2) );
+    top: calc((100vh / 2) - (70px / 2))
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: -5px;
+    background: 0;
+    border: 0;
+    width: 10px;
+    height: 10px;
+    font-weight: bold;
+    font-size: 20px;
 }

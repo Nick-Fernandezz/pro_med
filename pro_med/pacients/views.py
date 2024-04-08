@@ -4,9 +4,13 @@ from django.utils.timezone import now
 from .models import *
 from django.conf import settings
 from django.contrib import messages
+import os
 
 import qrcode
 from qrcode.image.svg import SvgPathImage
+from docxtpl import DocxTemplate
+
+from .scripts.doc_generator import generate_doc_context, generate_personal_data_doc, generate_contract_doc
 # Create your views here.
 
 
@@ -26,6 +30,16 @@ def search_pacient(request):
         elif request.GET.get('search_type') == 'insurance_number':
             try:
                 pacient = Pacients.objects.get(insurance_number=request.GET.get('insurance_number', None))
+                return redirect('pacient_detail_page', pacient.id)
+            except Pacients.DoesNotExist:
+                messages.add_message(request, messages.ERROR, 'Пациент не найден')
+                return redirect('search_pacient_page')
+            except ValueError:
+                messages.add_message(request, messages.ERROR, 'Введены некорректные данные')
+                return redirect('search_pacient_page')
+        elif request.GET.get('search_type') == 'medical_record_number':
+            try:
+                pacient = Pacients.objects.get(medical_record_number=request.GET.get('medical_record_number', None))
                 return redirect('pacient_detail_page', pacient.id)
             except Pacients.DoesNotExist:
                 messages.add_message(request, messages.ERROR, 'Пациент не найден')
@@ -95,5 +109,25 @@ def pacient_detail_page(request, pacient_id):
 
     return render(request, 'pacients/pacient_detail.html', context={
         'pacient': pacient,
-        'qr_matrix': qr.get_matrix()
+        'qr_matrix': qr.get_matrix(),
+        'personal_doc_url': generate_personal_data_doc(generate_doc_context('personal_data', pacient)),
+        'contract_doc_url': generate_contract_doc(generate_doc_context('contract', pacient, request))
     })
+
+
+@login_required
+def upload_personal_data_doc(request, pacient_id):
+    if request.method == 'POST':
+        pacient = Pacients.objects.get(id=pacient_id)
+        pacient.personal_data_doc = request.FILES['personal-data-doc']
+        pacient.save()
+        return redirect('pacient_detail_page', pacient.id)
+
+
+@login_required
+def upload_contract_doc(request, pacient_id):
+    if request.method == "POST":
+        pacient = Pacients.objects.get(id=pacient_id)
+        pacient.contract_doc = request.FILES['contract-doc']
+        pacient.save()
+        return redirect('pacient_detail_page', pacient.id)

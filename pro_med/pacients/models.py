@@ -42,6 +42,8 @@ class Pacients(models.Model):
     medical_record_number = models.CharField('Номер медицинской карты', max_length=100)
     date_created_medical_record = models.DateField('Дата выдачи медицинской карты пациента') 
 
+    personal_data_doc = models.FileField('Согласие на обработку персональных данных', upload_to='pacients/docs/personal_data/%Y/%m/%d/%H-%M-%S/', null=True)
+    contract_doc = models.FileField('Договор на оказание медицинских услуг', upload_to='pacients/docs/contract/%Y/%m/%d/%H-%M-%S/', null=True)
 
     class Meta:
 
