@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+form label {
+    font-weight: bold;
+    
+}
+
+form button {
+    background: 0;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+form button:hover {
+    background: #000;
+    color: #fff;
+    transition: 0.3s;
+}

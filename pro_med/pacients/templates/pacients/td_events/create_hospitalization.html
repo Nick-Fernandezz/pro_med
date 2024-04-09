@@ -1,0 +1,30 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}{{pacient.last_name}} {{pacient.first_name|slice:"1"}}. {{pacient.middle_name|slice:"1"}}.{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/td_events/create_hospitalization.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>
+            ФИО: <b>{{pacient.last_name}} {{pacient.first_name}} {% if pacient.middle_name %}{{pacient.middle_name}}{% endif %}</b> <br>
+            Паспорт: <b>{{pacient.series_passport}} {{pacient.numner_passport}}</b> <br>
+            Место работы: <b>{{pacient.work_place}}</b> <br>
+            Страховой полис: <b>{{pacient.insurance_number}} (до {{pacient.insurance_end_date}})</b> <br>
+            Страховая комания: <b>{{pacient.insurance_company}}</b>
+        </p>
+        <input name="pacient" type="hidden" value="{{pacient.id}}">
+        <input name="created_by" type="hidden" value="{{user.id}}">
+        {{form.code.label_tag}}
+        {{form.code}}
+        {{form.datetime.label_tag}}
+        {{form.datetime}}
+        <button type="submit">Госпитализировать</button>
+    </form>
+</div>
+
+{% endblock content %}

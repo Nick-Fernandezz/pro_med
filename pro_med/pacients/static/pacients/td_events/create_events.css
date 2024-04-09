@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+#create-event-form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 7px 50px 1px rgba(0,0,0,0.43);
+}
+
+#create-event-form input,  #create-event-form select{
+    margin-bottom: 10px;
+}
+
+#create-event-form button {
+    background: 0;
+    border: 1px #000 solid;
+    padding: 5px;
+}
+
+#create-event-form button:hover {
+    color: #fff;
+    background-color: #000;
+    transition: .3s;
+}

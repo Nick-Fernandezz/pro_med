@@ -58,6 +58,11 @@
                         Создать запись на прием
                     </a>
                 </div>
+                <div class="func-btn-place">
+                    <a href="{% url 'create_hospitalization' pacient.id %}" class="func-link">
+                        Госпитализация
+                    </a>
+                </div>
             </div>
         </div>
         <div class="col-8">
@@ -72,22 +77,24 @@
                 <h5>Лечебно-диагностические  мероприятия</h5>
                 <table class="table">
                     <thead>
-                      <tr>
-                        <th scope="col">Врач</th>
-                        <th scope="col">Тип мероприятия</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Диагноз</th>
-                        <th scope="col">Дата</th>
-                      </tr>
+                        <tr>
+                            <th scope="col">КОД</th>
+                            <th scope="col">Врач</th>
+                            <th scope="col">Тип мероприятия</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Диагноз</th>
+                            <th scope="col">Дата</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for event in td_events%}
                             <tr>
-                                <th scope="row">{{event.doctor__last_name}}</th>
-                                <td>{{event.type}}</td>
-                                <td>{{event.event_name}}</td>
-                                <td>{{event.diagnos}}</td>
-                                <td>{{event.started_date}}</td>
+                                <td scope="row"><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.id}}</a></th>
+                                <td><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.doctor.last_name}}</a></th>
+                                <td><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.type}}</a></td>
+                                <td><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.event_name}}</a></td>
+                                <td><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.diagnos}}</a></td>
+                                <td><a href="{% url 'detail_td_event' pacient.id event.id %}">{{event.started_date}}</a></td>                               
                             </tr>
                         {% endfor %}
                     </tbody>

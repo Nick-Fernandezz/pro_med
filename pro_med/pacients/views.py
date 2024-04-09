@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
-from .models import *
 from doctors.models import Doctors
 from django.conf import settings
 from django.contrib import messages
 import os
+
+from .models import *
+from .forms import *
 
 import qrcode
 from qrcode.image.svg import SvgPathImage
@@ -101,7 +103,7 @@ def pacient_detail_page(request, pacient_id):
         pacient.medical_record_number = f'{pacient.last_name[0].upper()}{pacient.id}'
         pacient.save()
     
-    td_events = TherapeuticAndDiagnosticEvents.objects.filter(pacient=pacient)
+    td_events = TherapeuticAndDiagnosticEvents.objects.filter(pacient=pacient).order_by('-started_date')
     
     qr = qrcode.QRCode(image_factory=SvgPathImage)
     qr.add_data(f'http://{settings.ALLOWED_HOSTS[0]}/pacients/view/{pacient.id}/')
@@ -112,6 +114,7 @@ def pacient_detail_page(request, pacient_id):
     return render(request, 'pacients/pacient_detail.html', context={
         'pacient': pacient,
         'td_events': td_events,
+        'qr_size': (len(qr.get_matrix()[0]), len(qr.get_matrix())),
         'qr_matrix': qr.get_matrix(),
         'personal_doc_url': generate_personal_data_doc(generate_doc_context('personal_data', pacient)),
         'contract_doc_url': generate_contract_doc(generate_doc_context('contract', pacient, request))
@@ -144,3 +147,41 @@ def create_td_event(request, pacient_id):
             'pacient': pacient,
             'doctors': doctors
         })
+    else:
+
+        td_event = TherapeuticAndDiagnosticEvents.objects.create(
+            pacient=get_object_or_404(Pacients, id=pacient_id),
+            doctor_id=request.POST.get('doctor'),
+            type=request.POST.get('type'),
+            event_name=request.POST.get('event_name'),
+            created_date=now(),
+            started_date=request.POST.get('date'),
+        )
+        td_event.save()
+        return redirect('pacient_detail_page', pacient_id)
+
+
+@login_required
+def detail_event(request, pacient_id, event_id):
+    td_event = get_object_or_404(TherapeuticAndDiagnosticEvents, id=event_id, pacient__id=pacient_id)
+    if request.method == 'GET':
+        td_event_form = TherapeuticAndDiagnosticEventsForm(instance=td_event)
+        return render(request, 'pacients/td_events/detail_event.html', context={
+            'event': td_event,
+            'td_event_form': td_event_form
+        })
+    else:
+        form = TherapeuticAndDiagnosticEventsForm(request.POST, instance=td_event)
+        if form.is_valid():
+            form.save()
+            return redirect('pacient_detail_page', pacient_id)
+        
+
+@login_required
+def create_hospitalization(request, pacient_id):
+    form = CreateHospitalizationForm(pacient_id)
+    pacient = get_object_or_404(Pacients, id=pacient_id)
+    return render(request, 'pacients/td_events/create_hospitalization.html', context={
+        'form': form,
+        'pacient': pacient
+    })

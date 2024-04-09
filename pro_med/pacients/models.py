@@ -74,7 +74,7 @@ class TherapeuticAndDiagnosticEvents(models.Model):
     event_name = models.CharField('Название проведенного мероприятия', max_length=200)
     event_result = models.TextField('Результаты мероприятия')
     
-    diagnos = models.CharField('Диагнос', max_length=150)
+    diagnos = models.CharField('Диагноз', max_length=150)
 
     recomendations = models.TextField('Рекомендации по дальнейшему лечению или контрольным исследованиям')
 

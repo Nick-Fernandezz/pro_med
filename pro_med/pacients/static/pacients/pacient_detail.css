@@ -34,8 +34,8 @@
 
 .qr-point-t, .qr-point-f {
     display: block;
-    width: 5px;
-    height: 5px;
+    width: 3px;
+    height: 3px;
 }
 
 .qr-point-t {
@@ -148,6 +148,7 @@
     background-color: #87CEEB;
     border: 1px #000 solid;
     padding: 5px;
+    margin-bottom: 10px;
 }
 
 .func-btn-place a {
@@ -157,4 +158,9 @@
     font-weight: bold;
     text-decoration: none;
     text-align: center;
+    
+}
+
+.table {
+    overflow-x: scroll;
 }
