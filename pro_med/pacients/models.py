@@ -18,6 +18,9 @@ class Pacients(models.Model):
 
     series_passport = models.IntegerField('Серия паспорта')
     numner_passport = models.IntegerField('Номер паспорта')
+    issued_passport = models.CharField('Выдан', max_length=200, null=True)
+    issued_date_passport = models.DateField('Дата выдачи', null=True)
+    issued_code_passport = models.CharField('Код подразделения', max_length=7, default='000-000')
 
     sex = models.CharField('Пол', choices=(( 'Male', 'Мужской'), ('Female', 'Женский')), max_length=10)
 
@@ -39,6 +42,8 @@ class Pacients(models.Model):
     medical_record_number = models.CharField('Номер медицинской карты', max_length=100)
     date_created_medical_record = models.DateField('Дата выдачи медицинской карты пациента') 
 
+    personal_data_doc = models.FileField('Согласие на обработку персональных данных', upload_to='pacients/docs/personal_data/%Y/%m/%d/%H-%M-%S/', null=True)
+    contract_doc = models.FileField('Договор на оказание медицинских услуг', upload_to='pacients/docs/contract/%Y/%m/%d/%H-%M-%S/', null=True)
 
     class Meta:
 
@@ -69,7 +74,7 @@ class TherapeuticAndDiagnosticEvents(models.Model):
     event_name = models.CharField('Название проведенного мероприятия', max_length=200)
     event_result = models.TextField('Результаты мероприятия')
     
-    diagnos = models.CharField('Диагнос', max_length=150)
+    diagnos = models.CharField('Диагноз', max_length=150)
 
     recomendations = models.TextField('Рекомендации по дальнейшему лечению или контрольным исследованиям')
 

@@ -21,7 +21,7 @@
         {{user.last_name}} {{user.first_name|slice:"1"}}. {{user.middle_name|slice:"1"}}.
     {% else %}
         <div class="auth-links">
-            <a href="">
+            <a href="{% url 'login_page' %}">
                 Вход
             </a>
         </div>

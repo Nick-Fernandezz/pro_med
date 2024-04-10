@@ -12,19 +12,14 @@
     <h2>Регистрация пациента</h2>
     <form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Фамилия" name="last_name" required>
-            <input type="text" placeholder="Имя" class="form-control" name="first_name" required>
-            <input type="text" placeholder="Отчество" class="form-control" name="middle_name">
-        </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupFile01">Фото</label>
             <input type="file" class="form-control" id="inputGroupFile01" name="avatar">
         </div>
         <div class="input-group">
-            <span class="input-group-text">Серия и номер паспорта</span>
-            <input type="text" aria-label="series_passport" class="form-control" name="series_passport" required>
-            <input type="text" aria-label="numner_passport" class="form-control" name="numner_passport" required>
+            <input type="text" class="form-control" placeholder="Фамилия" name="last_name" required>
+            <input type="text" placeholder="Имя" class="form-control" name="first_name" required>
+            <input type="text" placeholder="Отчество" class="form-control" name="middle_name">
         </div>
         <div class="input-group">
             <span class="input-group-text">Дата рождения</span>
@@ -38,10 +33,28 @@
                 <option value="Female">Женский</option>
             </select>
         </div>
+        <h4>Паспорт</h4>
+        <div class="input-group">
+            <span class="input-group-text">Серия и номер паспорта</span>
+            <input type="text" aria-label="series_passport" class="form-control" name="series_passport" required>
+            <input type="text" aria-label="numner_passport" class="form-control" name="numner_passport" required>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Выдан</span>
+            <input type="text" class="form-control" name="issued_passport" required>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Дата выдачи</span>
+            <input type="date" class="form-control" name="issued_date_passport" required>
+            <span class="input-group-text">Код подразделения</span>
+            <input type="text" class="form-control" name="issued_code_passport" required>
+        </div>
+        <h4>Работа</h4>
         <div class="input-group">
             <span class="input-group-text">Место работы</span>
             <input type="text" aria-label="work_place" class="form-control" name="work_place" >
         </div>
+        <h4>Адрес прописки</h4>
         <div class="input-group">
             <span class="input-group-text">Страна</span>
             <select class="form-select" id="autoSizingSelect" name="country" required>
@@ -62,12 +75,14 @@
             <span class="input-group-text">Квартира</span>
             <input type="text" class="form-control" name="apartment">
         </div>
+        <h4>Контакты</h4>
         <div class="input-group">
             <span class="input-group-text">Телефон</span>
             <input type="tel" class="form-control" name="phone_number" value="+7" required>
             <span class="input-group-text">Почта</span>
             <input type="text" class="form-control" name="email">
         </div>
+        <h4>Страховой полис</h4>
         <div class="input-group">
             <span class="input-group-text">Cтраховой полис №</span>
             <input type="text" class="form-control" name="insurance_number" required>

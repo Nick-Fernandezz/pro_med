@@ -17,17 +17,20 @@ from random import choice
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''.join([choice('django-insecure-+l=0&790n1^hg18hq(0v5zu_af2zqec)69k!ci+bv@i*^melud') for _ in range(100)])
+if not DEBUG:
+    SECRET_KEY = ''.join([choice('django-insecure-+l=0&790n1^hg18hq(0v5zu_af2zqec)69k!ci+bv@i*^melud') for _ in range(100)])
+else:
+    SECRET_KEY = 'testsecretkeydjango_1!!2345678909654#3qasdfghjkoi^87@654wasxcvbhji7!@654ewsdcvbhi'
 print("SC = " + SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['10.193.245.5', '127.0.0.1']
 
 
 # Application definition
@@ -79,9 +82,20 @@ WSGI_APPLICATION = 'pro_med.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'KittKiosk',
+    #     'USER': 'kitt_kiosk',
+    #     'HOST': '10.193.245.5',
+    #     'PASSWORD': 'KittKiosk123098Qaz',
+    #     'OPTIONS': {
+    #             'charset': 'utf8mb4',
+    #         }
+
+    # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
 
@@ -113,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -124,10 +138,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+else:
+    STATIC_ROOT = '/var/www/static/'
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+else:
+    MEDIA_ROOT = '/var/www/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

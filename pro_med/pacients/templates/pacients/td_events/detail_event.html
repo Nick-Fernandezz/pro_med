@@ -1,0 +1,28 @@
+{% extends "main/bases/base.html" %}
+{% load static %}
+{% block title %}{{pacient.last_name}} {{pacient.first_name|slice:"1"}}. {{pacient.middle_name|slice:"1"}}.{% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacients/td_events/detail_event.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="local-info">
+        <h3>{{event.pacient.last_name}} {{event.pacient.first_name}} {% if event.pacient.middle_name %}{{event.pacient.middle_name}}{% endif %}</h3>
+        <p>{{event.pacient.birthday}}</p>
+    </div>
+    <div>
+        Дата и время приема: {{event.started_date}} <br>
+        Код приема: {{event.id}}
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for el in td_event_form %}
+            <b>{{el.label}}</b>
+            {{el}}
+        {%endfor%}
+        <button type="submit">Закончить прием</button>
+    </form>
+</div>
+{% endblock %}
