@@ -179,9 +179,21 @@ def detail_event(request, pacient_id, event_id):
 
 @login_required
 def create_hospitalization(request, pacient_id):
-    form = CreateHospitalizationForm(pacient_id)
-    pacient = get_object_or_404(Pacients, id=pacient_id)
-    return render(request, 'pacients/td_events/create_hospitalization.html', context={
-        'form': form,
-        'pacient': pacient
-    })
+    if request.method == "GET":
+        form = CreateHospitalizationForm()
+        pacient = get_object_or_404(Pacients, id=pacient_id)
+        return render(request, 'pacients/td_events/create_hospitalization.html', context={
+            'form': form,
+            'pacient': pacient
+        })
+    else:
+        td_event = TherapeuticAndDiagnosticEvents.objects.create(
+            created_date=now(),
+            started_date=request.POST.get('datetime'),
+            type="Госпиталиация",
+            event_name=f"Гиспитализация по направлению {request.POST.get('code')}",
+            doctor_id=request.POST.get('created_by'),
+            pacient_id=pacient_id
+        )
+        td_event.save()
+        return redirect('pacient_detail_page', pacient_id)
